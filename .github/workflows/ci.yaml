@@ -71,7 +71,7 @@ jobs:
         uses: chirag-droid/setup-ccache@v1.1
         with:
           # default - ccache-key
-          key: 'render3d'
+          key: 'render3d-${{ matrix.os }}-${{ matrix.cpp_compiler }}-${{ matrix.build-type }}'
       
       - name: Configure CMake
         run: >
