@@ -32,4 +32,5 @@ endif ()
 add_subdirectory(Vendor)
 add_subdirectory(Source)
 
+enable_testing()
 add_subdirectory(Tests)
