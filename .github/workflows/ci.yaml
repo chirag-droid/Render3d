@@ -7,7 +7,7 @@ on: # rebuild any PRs and main branch changes
       - 'releases/*'
 
 jobs:
-  build:
+  ci:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -68,7 +68,7 @@ jobs:
           vulkan-use-cache: true
 
       - name: Setup ccache
-        uses: chirag-droid/setup-ccache@v1
+        uses: chirag-droid/setup-ccache@v1.1
         with:
           # default - ccache-key
           key: 'render3d'
@@ -83,5 +83,10 @@ jobs:
           -D CMAKE_CXX_COMPILER_LAUNCHER=ccache
           -S ${{ github.workspace }}
 
-      - name: Build Executable
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --target Render3D
+      - name: Build Render3D
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+
+      - name: Run Tests
+        run: |
+          cd ${{ steps.strings.outputs.build-output-dir }}
+          ctest -j2 --output-on-failure
