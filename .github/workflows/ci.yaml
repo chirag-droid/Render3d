@@ -68,7 +68,7 @@ jobs:
           vulkan-use-cache: true
 
       - name: Setup ccache
-        uses: chirag-droid/setup-ccache@v1
+        uses: chirag-droid/setup-ccache@v1.1
         with:
           # default - ccache-key
           key: 'render3d'
