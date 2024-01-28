@@ -4,7 +4,6 @@
  */
 
 #include "Core/Base.h"
-#include "Application/ApplicationBuilder.h"
 #include "Launcher/CommandLine.h"
 #include "Core/Log.h"
 #include "config.h"
@@ -25,14 +24,16 @@ int main(int argc, char *argv[]) {
 #else
         return -1;
 #endif
-    } else if (status == Status::Warn) {
+    }
+
+    if (status == Status::Warn) {
         // Command lines were correct but filename couldn't be parsed
         return 0;
     }
 
-    std::unique_ptr<Application> application = ApplicationBuilder{}
-            .withScript(filename)
-            .build();
+    std::unique_ptr<Application> application = std::make_unique<Application>(
+            ApplicationSpec{}.withScript(filename)
+    );
 
     application->Run();
 

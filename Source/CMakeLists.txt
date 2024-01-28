@@ -1,32 +1,33 @@
 configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
 
 set(LAUNCHER_SRC
-        Launcher/Launcher.cpp
-        Launcher/Launcher.h
-        Launcher/CommandLine.cpp
-        Launcher/CommandLine.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Launcher/Launcher.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Launcher/Launcher.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Launcher/CommandLine.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Launcher/CommandLine.h
 )
 set(APPLICATION_SRC
-        Application/Application.cpp
-        Application/Application.h
-        Application/ApplicationBuilder.h
-        Application/ApplicationBuilder.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Application/Application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Application/Application.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Application/ApplicationSpec.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Application/ApplicationSpec.h
 )
 set(CORE_SRC
-        Core/Log.h
-        Core/Log.cpp
-        Core/Base.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Core/Log.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Core/Log.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Core/Base.h
 )
 set(SCRIPTING_SRC
-        Scripting/Environment.cpp
-        Scripting/Environment.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Scripting/Environment.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Scripting/Environment.h
+)
+set(BACKEND_SRC
+        ${CMAKE_CURRENT_SOURCE_DIR}/Backend/Vulkan/Vulkan.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Backend/Vulkan/Vulkan.h
 )
 
-add_executable(Render3D ${LAUNCHER_SRC} ${APPLICATION_SRC} ${CORE_SRC} ${SCRIPTING_SRC})
-
-if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
-    target_compile_definitions(Render3D PRIVATE R3D_DEV)
-endif ()
+# Main Executable Program
+add_executable(Render3D ${LAUNCHER_SRC} ${APPLICATION_SRC} ${CORE_SRC} ${SCRIPTING_SRC} ${BACKEND_SRC})
 
 # enable VisualStudio Hot Reload feature
 if (MSVC)
@@ -44,5 +45,3 @@ file(MAKE_DIRECTORY ${EXAMPLES_BIN_DIR})
 configure_file(${EXAMPLES_SRC_DIR}/Log.lua ${EXAMPLES_BIN_DIR})
 configure_file(${EXAMPLES_SRC_DIR}/Window.lua ${EXAMPLES_BIN_DIR})
 configure_file(${EXAMPLES_SRC_DIR}/Dev.lua ${EXAMPLES_BIN_DIR})
-
-install(TARGETS Render3D DESTINATION bin)

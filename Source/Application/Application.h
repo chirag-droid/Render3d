@@ -2,19 +2,13 @@
 
 #pragma once
 
-#define GLFW_INCLUDE_VULKAN
+#include "Application/ApplicationSpec.h"
 
+#define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
 
-#include <string>
-
 namespace Render3D {
-    struct ApplicationSpec {
-        std::string Title = "Render3D";
-        uint32_t Width = 1600;
-        uint32_t Height = 900;
-        std::string Script;
-    };
+
 
     class Application {
     public:

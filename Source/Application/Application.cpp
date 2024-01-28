@@ -3,8 +3,12 @@
  * Copyright (C) 2024 Chirag Singla
  */
 
-#include "Core/Log.h"
+#include "Application/ApplicationSpec.h"
 #include "Application/Application.h"
+#include "Core/Log.h"
+
+#define GLFW_INCLUDE_VULKAN
+#include "GLFW/glfw3.h"
 
 namespace Render3D {
     Application *Application::s_Instance = nullptr;
@@ -34,6 +38,7 @@ namespace Render3D {
             throw std::exception();
         }
 
+        s_Instance = this;
         R3D_INFO("Window created");
     }
 
