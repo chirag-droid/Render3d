@@ -17,7 +17,7 @@ if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose Release or Debug" FORCE)
 endif ()
 
-project(Render3D VERSION 0.1 DESCRIPTION "A lua 3d simulation engine.")
+project(Render3D VERSION 0.0.1 DESCRIPTION "A lua 3d simulation engine.")
 
 set(CMAKE_CXX_STANDARD_REQUIRED 17)
 set(CMAKE_CXX_STANDARD 17)
@@ -31,3 +31,5 @@ endif ()
 
 add_subdirectory(Vendor)
 add_subdirectory(Source)
+
+add_subdirectory(Tests)

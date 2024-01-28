@@ -14,3 +14,8 @@ set_target_properties(glfw PROPERTIES FOLDER "Vendor")
 add_subdirectory(spdlog)
 
 set_target_properties(spdlog PROPERTIES FOLDER "Vendor")
+
+# googletest
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+add_subdirectory(googletest)
