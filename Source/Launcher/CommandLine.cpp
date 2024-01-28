@@ -6,7 +6,8 @@
 #include "Core/Base.h"
 #include "Launcher/CommandLine.h"
 
-#include <cassert>
+#include <vector>
+#include <string>
 
 namespace Render3D {
     void CommandLine::PrintHelp(const std::string &executable) {
@@ -25,27 +26,31 @@ namespace Render3D {
         std::cout << "v" << VERSION_MAJOR << "." << VERSION_MINOR << "\n";
     }
 
-    Status CommandLine::Parse(int argc, char *argv[], std::string &fileName) {
-        assert(argc > 0);
-        std::string executable = argv[0];
-
-        if (argc < 2) {
-            CommandLine::PrintHelp(executable);
-            return Status::Exit;
+    Status CommandLine::Parse(const std::vector<std::string>& args, std::string &fileName) {
+        if (args.empty()) {
+            return Status::kError;
         }
 
-        std::string arg = argv[1];
-        if (arg == "-h" || arg == "--help") {
+        if (args.size() == 1) {
+            const std::string& executable = args[0];
             CommandLine::PrintHelp(executable);
-            return Status::Warn;
+            return Status::kWarn;
         }
 
-        if (arg == "-v" || arg == "--version") {
+        const std::string& executable = args[0];
+        const std::string& argument = args[1];
+
+        if (argument == "-h" || argument == "--help") {
+            CommandLine::PrintHelp(executable);
+            return Status::kWarn;
+        }
+
+        if (argument == "-v" || argument == "--version") {
             CommandLine::PrintVersion();
-            return Status::Warn;
+            return Status::kWarn;
         }
 
-        fileName = argv[1];
-        return Status::Success;
+        fileName = argument;
+        return Status::kSuccess;
     }
 } // Render3D

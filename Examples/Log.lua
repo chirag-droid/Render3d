@@ -1,5 +1,5 @@
 trace("Log Trace")
 info("Log Info")
-warn("Log Warn")
+warn("Log kWarn")
 error("Log Error")
 critical("Log Critical")

@@ -8,11 +8,12 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace Render3D::CommandLine {
     void PrintHelp(const std::string &executable);
 
     void PrintVersion();
 
-    Status Parse(int argc, char *argv[], std::string &fileName);
+    Status Parse(const std::vector<std::string>& args, std::string &fileName);
 }

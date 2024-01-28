@@ -20,8 +20,8 @@ namespace Render3D {
     static std::string AppName = "Render3D Simulation";
 
     enum Status {
-        Exit,
-        Warn,
-        Success,
+        kError,
+        kWarn,
+        kSuccess,
     };
 }

@@ -7,17 +7,54 @@
 
 #include "Launcher/CommandLine.cpp"
 
-TEST(LauncherTest, ErrorOnNoArg) {
-    std::string executable = "GTest";
-    std::string fileName;
+class ArgumentsTest: public ::testing::TestWithParam<std::string> {
+protected:
+    void SetUp() override {
+        args.emplace_back("Render3D_Test");
+        args.emplace_back(GetParam());
+    }
 
-    char **argv = new char *[1];
-    argv[0] = new char[executable.size() + 1];
-    strcpy(argv[0], executable.data());
+    void TearDown() override {
+        args.clear();
+    }
 
-    EXPECT_EQ(Render3D::Status::Exit, Render3D::CommandLine::Parse(1, argv, fileName));
-    EXPECT_EQ(fileName, "");
+    std::vector<std::string> args;
+};
 
-    delete[] argv[0];
-    delete[] argv;
+TEST_P(ArgumentsTest, Parses) {
+    std::string filename;
+    EXPECT_EQ(Render3D::Status::kWarn, Render3D::CommandLine::Parse(args, filename));
+    EXPECT_EQ(filename, "");
 }
+
+INSTANTIATE_TEST_SUITE_P(
+    Launcher,
+    ArgumentsTest,
+    ::testing::Values("-v", "--version", "-h", "--help")
+);
+
+class FilenameTest: public ::testing::TestWithParam<std::string> {
+protected:
+    void SetUp() override {
+        args.emplace_back("Render3D_Test");
+        args.emplace_back(GetParam());
+    }
+
+    void TearDown() override {
+        args.clear();
+    }
+
+    std::vector<std::string> args;
+};
+
+TEST_P(FilenameTest, Parses) {
+    std::string filename;
+    EXPECT_EQ(Render3D::Status::kSuccess, Render3D::CommandLine::Parse(args, filename));
+    EXPECT_EQ(filename, GetParam());
+}
+
+INSTANTIATE_TEST_SUITE_P(
+        Launcher,
+        FilenameTest,
+        ::testing::Values("Examples/Test.lua")
+);
