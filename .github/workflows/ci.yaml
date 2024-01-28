@@ -1,0 +1,32 @@
+name: 'build & test'
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: Setup ccache
+        uses: chirag-droid/setup-ccache@v1
+        with:
+          # default - ccache-key
+          key: 'render3d'
+
+      - name: Build with cmake
+        uses: lukka/run-cmake@v3.4
+        with:
+          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+          cmakeAppendedArgs: '-D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
+          buildWithCMake: true
+          buildDirectory: '${{ github.workspace }}/build'
