@@ -68,7 +68,7 @@ jobs:
           vulkan-use-cache: true
 
       - name: Setup ccache
-        uses: chirag-droid/setup-ccache@v2
+        uses: chirag-droid/setup-ccache@v2.1
         with:
           # default - ccache-key
           key: 'render3d-${{ matrix.os }}-${{ matrix.cpp_compiler }}-${{ matrix.build-type }}'
